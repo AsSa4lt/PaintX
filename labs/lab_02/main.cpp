@@ -145,74 +145,65 @@ Node* find_min_node(Node* node) {
 
 
 char* delete_node(Node*& p_tree, const char* val) {
-    const auto [parent, current, type] = find_node(nullptr, p_tree, val);
 
-    if (!current) return nullptr; // Node with given value not found
+    // Start by searching for the node
+    auto [p_par, p_current, type] = find_node(nullptr, p_tree, val);
 
-    char* deletedData = strdup(current->data); // Store the data that will be deleted
+    // If the node isn't found, just return null
+    if (p_current == nullptr) {
+        return nullptr;
+    }
 
-    // Handle the case where the node to be deleted is the root
-    if (parent == nullptr) {
-        if (current->p_left == nullptr && current->p_right == nullptr) {
-            // Node to be deleted is a leaf node
-            delete[] current->data;
-            delete current;
-            p_tree = nullptr; // Update the root pointer
-        } else if (current->p_left == nullptr) {
-            // Node to be deleted has only a right child
-            Node* temp = current->p_right;
-            delete[] current->data;
-            delete current;
-            p_tree = temp; // Update the root pointer
-        } else if (current->p_right == nullptr) {
-            // Node to be deleted has only a left child
-            Node* temp = current->p_left;
-            delete[] current->data;
-            delete current;
-            p_tree = temp; // Update the root pointer
-        } else {
-            // Node to be deleted has two children
-            Node* successor = find_min_node(current->p_right);
-            current->data = strdup(successor->data);
-            delete_node(current->p_right, successor->data);
-            delete[] successor->data; // This might be required depending on your delete_node logic
-            delete successor;
+    // Save a copy of the node's data to return at the end
+    char* data_to_return = p_current->data;
+
+    // If the node has both children
+    if (p_current->p_left && p_current->p_right) {
+
+        // Find the successor
+        auto [p_s_par, p_successor] = find_min(p_current, p_current->p_right);
+
+        // If the successor is the direct child of the current node
+        if (p_s_par == p_current) {
+            p_s_par->p_right = p_successor->p_right;
+        }
+            // If the successor is deeper in the tree
+        else {
+            p_s_par->p_left = p_successor->p_right;
         }
 
-        return deletedData; // Return the deleted data
-    }
+        // Swap the data of the current node and the successor
+        swap(p_current->data, p_successor->data);
 
-    //delete leaf
-    if (current->p_left == nullptr && current->p_right == nullptr) {
-        if (type == ChildType::Left)
-            parent->p_left = nullptr;
-        else
-            parent->p_right = nullptr;
+        // Update the pointer to delete the successor
+        p_current = p_successor;
     }
-    // in case, if we have one child
-    else if (current->p_left == nullptr) {
-        if (type == ChildType::Left)
-            parent->p_left = current->p_right;
-        else
-            parent->p_right = current->p_right;
-    } else if (current->p_right == nullptr) {
-        if (type == ChildType::Left)
-            parent->p_left = current->p_left;
-        else
-            parent->p_right = current->p_left;
-    }
-    // if both children exists
+        // If the node has one or no child
     else {
-        Node* successor = find_min_node(current->p_right);
-        current->data = strdup(successor->data); // Copy the successor's value
-        delete_node(current->p_right, successor->data); // Delete the successor node
+        Node* p_child = (p_current->p_left) ? p_current->p_left : p_current->p_right;
+
+        // Check if the current node is a left or right child of its parent
+        if (type == ChildType::Left) {
+            p_par->p_left = p_child;
+        } else if (type == ChildType::Right) {
+            p_par->p_right = p_child;
+        }
+            // If the node is the root
+        else {
+            p_tree = p_child;
+        }
     }
 
-    delete[] current->data;
-    delete current;
+    // Delete the node
+    delete p_current;
 
-    return deletedData;
+    // Return the saved data
+    return data_to_return;
 }
+
+
+
+
 
 
 
