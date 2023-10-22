@@ -78,51 +78,74 @@ void insert_node(unique_ptr<Node>& p_tree, unique_ptr<Node>& p_node) {
 }
 
 string delete_node(unique_ptr<Node>& p_tree, const string& val) {
+    // Start by searching for the node
     auto [parent, current, type] = find_node(nullptr, p_tree.get(), val);
 
-    if (!current) return "";
+    // Node not found
+    if (!current) {
+        return "";
+    }
 
+    // Save the data of the node we're going to delete
     string deletedData = current->data;
 
+    // Lambda to remove a node based on child type
     auto removeNode = [&]() {
         if (type == ChildType::Left) {
             parent->p_left.reset();
-        } else {
+        } else if (type == ChildType::Right) {
             parent->p_right.reset();
         }
     };
 
+    // Leaf node
     if (!current->p_left && !current->p_right) {
         removeNode();
-    } else if (!current->p_left) {
+    }
+        // Node with only a right child
+    else if (!current->p_left) {
         if (type == ChildType::Left) {
             parent->p_left = move(current->p_right);
         } else {
             parent->p_right = move(current->p_right);
         }
-    } else if (!current->p_right) {
+    }
+        // Node with only a left child
+    else if (!current->p_right) {
         if (type == ChildType::Left) {
             parent->p_left = move(current->p_left);
         } else {
             parent->p_right = move(current->p_left);
         }
-    } else {
-        auto& successorNode = current->p_right;
-        while (successorNode->p_left) {
-            successorNode = move(successorNode->p_left);
+    }
+        // Node with both children
+    else {
+        // The successor is either the node's right child or the right child's leftmost child
+        Node* successorParent = current;
+        auto* successorNode = &(current->p_right);
+        while ((*successorNode)->p_left) {
+            successorParent = successorNode->get();
+            successorNode = &((*successorNode)->p_left);
         }
 
-        current->data = successorNode->data;
+        current->data = (*successorNode)->data;
 
-        if (successorNode->p_right) {
-            successorNode = move(successorNode->p_right);
+        // If the successor has a right child, move it up to the successor's position
+        if ((*successorNode)->p_right) {
+            *successorNode = move((*successorNode)->p_right);
         } else {
-            successorNode.reset();
+            if (successorParent->p_left.get() == successorNode->get()) {
+                successorParent->p_left.reset();
+            } else {
+                successorParent->p_right.reset();
+            }
         }
     }
 
     return deletedData;
 }
+
+
 
 unique_ptr<Node> construct_node(const string& value) {
     return make_unique<Node>(Node{value, nullptr, nullptr});
