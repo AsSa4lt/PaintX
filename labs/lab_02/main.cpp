@@ -146,13 +146,13 @@ Node* find_min_node(Node* node) {
 
 char* delete_node(Node*& p_tree, const char* val) {
     const auto [parent, current, type] = find_node(nullptr, p_tree, val);
+
+    if (!current) return nullptr; // Node with given value not found
+
+    char* deletedData = strdup(current->data); // Store the data that will be deleted
+
     // Handle the case where the node to be deleted is the root
     if (parent == nullptr) {
-        if (current == nullptr) {
-            // Node with given value not found
-            return nullptr;
-        }
-
         if (current->p_left == nullptr && current->p_right == nullptr) {
             // Node to be deleted is a leaf node
             delete[] current->data;
@@ -175,9 +175,11 @@ char* delete_node(Node*& p_tree, const char* val) {
             Node* successor = find_min_node(current->p_right);
             current->data = strdup(successor->data);
             delete_node(current->p_right, successor->data);
+            delete[] successor->data; // This might be required depending on your delete_node logic
+            delete successor;
         }
 
-        return current->data;
+        return deletedData; // Return the deleted data
     }
 
     //delete leaf
@@ -186,9 +188,7 @@ char* delete_node(Node*& p_tree, const char* val) {
             parent->p_left = nullptr;
         else
             parent->p_right = nullptr;
-        return current->data;
     }
-
     // in case, if we have one child
     else if (current->p_left == nullptr) {
         if (type == ChildType::Left)
@@ -201,15 +201,19 @@ char* delete_node(Node*& p_tree, const char* val) {
         else
             parent->p_right = current->p_left;
     }
-
     // if both children exists
     else {
         Node* successor = find_min_node(current->p_right);
         current->data = strdup(successor->data); // Copy the successor's value
         delete_node(current->p_right, successor->data); // Delete the successor node
     }
-    return nullptr;
+
+    delete[] current->data;
+    delete current;
+
+    return deletedData;
 }
+
 
 
 /*!
