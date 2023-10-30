@@ -3,22 +3,42 @@
 //
 
 #include "bst.h"
+using namespace  std;
+
+
+Bst::Bst() : _p_tree(nullptr) {}
+Bst::~Bst() noexcept = default;
+Bst::Bst(const Bst& other) {
+    if (other._p_tree) {
+        for (const auto& key : other.keys()) {
+            insert(key);
+        }
+    }
+}
+Bst& Bst::operator=(const Bst& other) {
+    Bst temp(other);
+    std::swap(_p_tree, temp._p_tree);
+    return *this;
+}
+
+
 
 void Bst::insert(std::string_view key) {
-    auto p_node = std::make_unique<Node>(Node{std::string(key), nullptr, nullptr});
-    if (_tree == nullptr) {
-        // This calls move assignment operator
-        // Deallocates the memory the prvious tree pointed to
+    // (!) The allocation happens here!
+    auto p_node = make_unique<Node>(key);
+
+    if (_p_tree == nullptr) {
+        // (!) This calls move assignment operator
         // Moves the ownership of the p_node
-        _tree = move(p_node);
+        _p_tree = move(p_node);
     }
     else {
         // Find the node to where we shall attach this new node
-        auto [p_par, p_target, _] = find_node(nullptr, _tree.get(), p_node->data);
+        auto [p_par, p_target, _] = find_node(nullptr, _p_tree.get(), key);
 
         auto cmp_res = p_node->data <=> p_par->data;
         // To the left
-        if (cmp_res == std::strong_ordering::less) {
+        if (cmp_res == strong_ordering::less) {
             p_par->p_left = move(p_node);
         }
             // To the right
@@ -28,66 +48,16 @@ void Bst::insert(std::string_view key) {
     }
 }
 
-Bst::FindNodeRes Bst::find_node(Node* p_par, Node* p_node, std::string_view target) const{
-    if (p_node == nullptr) {
-        return std::tuple(nullptr, nullptr, std::nullopt);
-    }
-
-    // Three-way comparison operator
-    // (!)
-    auto cmp_res = target <=> p_node->data;
-
-    // Should search in left subtree
-    if (cmp_res == std::strong_ordering::less) {
-        // If the left child exists
-        if (p_node->p_left != nullptr) {
-            return  find_node(p_node, p_node->p_left.get(), target);
-        }
-            // Else, the item is not present
-        else {
-            return std::tuple(p_node, nullptr, std::nullopt);
-        }
-    }
-        // If this it the element
-    else if (cmp_res == std::strong_ordering::equivalent) {
-        std::optional<ChildType> type = std::nullopt;
-        if (p_par != nullptr) {
-            if (p_par->p_left.get() == p_node) type = std::optional(ChildType::Left);
-            else if (p_par->p_right.get() == p_node) type = std::optional(ChildType::Right);
-        }
-        return std::tuple(p_par, p_node, type);
-    }
-        // If should search in the right subtree
-    else {
-        // If the right child exists
-        if (p_node->p_right != nullptr) {
-            return  find_node(p_node, p_node->p_right.get(), target);
-        }
-            // Else, the item is not present
-        else {
-            return std::tuple(p_node, nullptr, std::nullopt);
-        }
-    }
-}
-Bst::FindMin Bst:: find_min(Node* p_par, Node* p_node){
-    if (!p_node) return std::pair(p_par, nullptr);
-
-    if (p_node->p_left)
-        return find_min(p_node, p_node->p_left.get());
-    else
-        return std::pair(p_par, p_node);
-}
-
-std::optional<std::string> Bst::erase(std::string_view key) {
-    auto [p_d_par, p_d, d_type] = find_node(nullptr, _tree.get(), key);
+optional<string> Bst::erase(std::string_view key) {
+    auto [p_d_par, p_d, d_type] = find_node(nullptr, _p_tree.get(), key);
 
     // Nothing to delete
-    if (p_d == nullptr) return std::nullopt;
+    if (p_d == nullptr) return nullopt;
 
     // copy assignment string operator==(const string& other)
     // (!) Be wary what heppens here with the move
     // the `p_d->data` was robbed and shall not be used
-    std::string res = move(p_d->data);
+    string res = move(p_d->data);
 
     // Case 3: Two children
     if (p_d->p_left && p_d->p_right) {
@@ -117,12 +87,12 @@ std::optional<std::string> Bst::erase(std::string_view key) {
     else {
         // Get the child
         // We snatched the ownership from the node to be deleted
-        std::unique_ptr<Node> p_s = (p_d->p_left ? move(p_d->p_left) : move(p_d->p_right));
+        unique_ptr<Node> p_s = (p_d->p_left ? move(p_d->p_left) : move(p_d->p_right));
 
         if (d_type == ChildType::Left) p_d_par->p_left = move(p_s);
         else if (d_type == ChildType::Right) p_d_par->p_right = move(p_s);
             // d_type == nullopt if root
-        else _tree = move(p_s);
+        else _p_tree = move(p_s);
         // The deleted nodes are deallocated here since their unique_ptr were put out
         // by the move assignment operator
     }
@@ -131,20 +101,78 @@ std::optional<std::string> Bst::erase(std::string_view key) {
 }
 
 bool Bst::contains(std::string_view key) const {
-    auto [_parent, _target, _type] = Bst::find_node(nullptr, _tree.get(), key);
-    if(_target == nullptr) return  true;
-    else return false;
+    auto [_par, p_target, _type] = find_node(nullptr, _p_tree.get(), key);
+    return p_target != nullptr;
 }
 
-std::vector<std::string> Bst::keys() const {
-    auto nodes = Bst::get_sorted_nodes(_tree.get());
-    std::vector<std::string> res;
-    for(auto&& x: res)
-        res.push_back(x);
+vector<string> Bst::keys() const {
+    auto nodes = get_sorted_nodes(_p_tree.get());
+    vector<string> res;
+    res.reserve(nodes.size());
+
+    for (auto&& x : nodes)
+        res.emplace_back(x->data);
+
     return res;
 }
-Bst::SortNodes Bst::get_sorted_nodes(const Node* p_node) const{
-    std::vector<const Node*> res;
+
+Bst::FindTuple Bst::find_node(Node* p_par, Node* p_node, std::string_view target) {
+    // (!) Can be static
+
+    if (p_node == nullptr) {
+        return tuple(nullptr, nullptr, nullopt);
+    }
+
+    // Three-way comparison operator
+    // (!)
+    auto cmp_res = target <=> p_node->data;
+
+    // Should search in left subtree
+    if (cmp_res == strong_ordering::less) {
+        // If the left child exists
+        if (p_node->p_left != nullptr) {
+            return  find_node(p_node, p_node->p_left.get(), target);
+        }
+            // Else, the item is not present
+        else {
+            return tuple(p_node, nullptr, nullopt);
+        }
+    }
+        // If this it the element
+    else if (cmp_res == strong_ordering::equivalent) {
+        optional<ChildType> type = nullopt;
+        if (p_par != nullptr) {
+            if (p_par->p_left.get() == p_node) type = optional(ChildType::Left);
+            else if (p_par->p_right.get() == p_node) type = optional(ChildType::Right);
+        }
+        return tuple(p_par, p_node, type);
+    }
+        // If should search in the right subtree
+    else {
+        // If the right child exists
+        if (p_node->p_right != nullptr) {
+            return  find_node(p_node, p_node->p_right.get(), target);
+        }
+            // Else, the item is not present
+        else {
+            return tuple(p_node, nullptr, nullopt);
+        }
+    }
+}
+
+Bst::FindMinPair Bst::find_min(Node* p_par, Node* p_node) {
+    // (!) Can be static
+    if (!p_node) return pair(p_par, nullptr);
+
+    if (p_node->p_left)
+        return find_min(p_node, p_node->p_left.get());
+    else
+        return pair(p_par, p_node);
+}
+
+vector<const Bst::Node*> Bst::get_sorted_nodes(const Node* p_node) {
+    // (!) Can be static
+    vector<const Node*> res;
 
     if (!p_node) return res;
 
