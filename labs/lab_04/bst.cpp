@@ -6,22 +6,6 @@
 using namespace  std;
 
 
-Bst::Bst() : _p_tree(nullptr) {}
-Bst::~Bst() noexcept = default;
-Bst::Bst(const Bst& other) {
-    if (other._p_tree) {
-        for (const auto& key : other.keys()) {
-            insert(key);
-        }
-    }
-}
-Bst& Bst::operator=(const Bst& other) {
-    Bst temp(other);
-    std::swap(_p_tree, temp._p_tree);
-    return *this;
-}
-
-
 
 void Bst::insert(std::string_view key) {
     // (!) The allocation happens here!
@@ -55,7 +39,7 @@ optional<string> Bst::erase(std::string_view key) {
     if (p_d == nullptr) return nullopt;
 
     // copy assignment string operator==(const string& other)
-    // (!) Be wary what heppens here with the move
+    // (!) Be wary what happens here with the move
     // the `p_d->data` was robbed and shall not be used
     string res = move(p_d->data);
 
@@ -184,3 +168,32 @@ vector<const Bst::Node*> Bst::get_sorted_nodes(const Node* p_node) {
     res.insert(res.end(), b.begin(), b.end());
     return res;
 }
+
+
+std::unique_ptr<Bst::Node> deep_copy_node(const std::unique_ptr<Bst::Node>& source) {
+    if (!source) return nullptr;
+    auto node = std::make_unique<Bst::Node>(source->data);
+    node->p_left = deep_copy_node(source->p_left);
+    node->p_right = deep_copy_node(source->p_right);
+    return node;
+}
+
+Bst &Bst::operator=(Bst &&other) noexcept = default;
+
+Bst::Bst(Bst&& other) noexcept = default;
+
+Bst::Bst(const Bst& other) {
+    _p_tree = deep_copy_node(other._p_tree);
+}
+
+Bst& Bst::operator=(const Bst& other) {
+    if (this != &other) {
+        _p_tree = deep_copy_node(other._p_tree);
+    }
+    return *this;
+}
+
+Bst::Bst() = default;
+
+Bst::~Bst() noexcept = default;
+
