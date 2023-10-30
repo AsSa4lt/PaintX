@@ -178,20 +178,30 @@ std::unique_ptr<Bst::Node> deep_copy_node(const std::unique_ptr<Bst::Node>& sour
     return node;
 }
 
-Bst &Bst::operator=(Bst &&other) noexcept = default;
+Bst &Bst::operator=(Bst &&other) = default;
 
-Bst::Bst(Bst&& other) noexcept = default;
+Bst::Bst(Bst&& other) = default;
 
 Bst::Bst(const Bst& other) {
-    _p_tree = deep_copy_node(other._p_tree);
+    for (auto&& key : other.keys()) {
+        insert(key);
+    }
 }
 
-Bst& Bst::operator=(const Bst& other) {
-    if (this != &other) {
-        _p_tree = deep_copy_node(other._p_tree);
-    }
-    return *this;
+
+Bst& Bst::operator=(const Bst& tree) {
+    // If the same instance (compare pointers)
+    if (&tree == this) return *this;
+
+    // (!) Think about what would happen, if the object `tree` is the same as `*this`
+
+    // The copy constructor is already defined + move assignment is implemented by the compiler
+    // The value of the assignment is by convention reference to the result
+    return *this = Bst(tree);
 }
+
+
+
 
 Bst::Bst() = default;
 
