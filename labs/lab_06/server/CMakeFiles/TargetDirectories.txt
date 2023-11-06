@@ -1,0 +1,8 @@
+/Users/rostyslav/Desktop/C++ coding/lab06/server/CMakeFiles/edit_cache.dir
+/Users/rostyslav/Desktop/C++ coding/lab06/server/CMakeFiles/rebuild_cache.dir
+/Users/rostyslav/Desktop/C++ coding/lab06/server/server/CMakeFiles/server.dir
+/Users/rostyslav/Desktop/C++ coding/lab06/server/server/CMakeFiles/edit_cache.dir
+/Users/rostyslav/Desktop/C++ coding/lab06/server/server/CMakeFiles/rebuild_cache.dir
+/Users/rostyslav/Desktop/C++ coding/lab06/server/client/CMakeFiles/client.dir
+/Users/rostyslav/Desktop/C++ coding/lab06/server/client/CMakeFiles/edit_cache.dir
+/Users/rostyslav/Desktop/C++ coding/lab06/server/client/CMakeFiles/rebuild_cache.dir
