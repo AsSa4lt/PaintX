@@ -16,6 +16,7 @@ public:
         }
     }
     virtual ~Animal() = default;
+    virtual std::unique_ptr<Animal> clone() const = 0;
 
 };
 
@@ -27,6 +28,9 @@ class Dog: public Animal{
 public:
     Dog(std::string_view name, size_t portion)
             : Animal(name, portion) {}
+    std::unique_ptr<Animal> clone() const override {
+        return std::make_unique<Dog>(*this);
+    }
 };
 
 class Cat: public Animal{
@@ -36,6 +40,11 @@ class Cat: public Animal{
 public:
     Cat(std::string_view name, size_t portion)
     : Animal(name, portion) {}
+
+    std::unique_ptr<Animal> clone() const override {
+        return std::make_unique<Cat>(*this);
+    }
+
 };
 
 class Fly: public  Animal{
@@ -45,10 +54,14 @@ class Fly: public  Animal{
 public:
     Fly(std::string_view name, size_t portion)
     : Animal(name, portion) {}
+    std::unique_ptr<Animal> clone() const override {
+        return std::make_unique<Fly>(*this);
+    }
 };
 
 class Zoo {
 public:
+
     void insert(std::unique_ptr<Animal> p_animal){
         _animal.emplace(p_animal->name, std::move(p_animal));
     }
@@ -59,6 +72,25 @@ public:
     void restock(size_t amount){
         portion+=amount;
     }
+
+
+    Zoo() = default;
+    // Rule of 5 special functions
+    ~Zoo() noexcept = default;
+    Zoo(const Zoo& zoo) {
+        for (const auto& [k, p_a] : zoo._animal) {
+            insert((*p_a).clone());
+        }
+        portion = zoo.portion;
+    }
+
+    Zoo& operator=(const Zoo& zoo) {
+        if (&zoo == this) return *this;
+        return *this = Zoo(zoo);
+    };
+    Zoo(Zoo&& other) = default;
+    Zoo& operator=(Zoo&& other) = default;
+
 
     static std::unique_ptr<Animal> spawn_animal(std::string_view  type, std::string_view name, size_t portion){
         if(type == "dog"){
