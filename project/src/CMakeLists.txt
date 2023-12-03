@@ -9,6 +9,8 @@ set(SOURCE_FILES
         main.cpp
         UI/Window.cpp
         UI/Window.h
+        UI/Canvas.cpp
+        UI/Canvas.h
         # Add other source files here as your project grows
 )
 

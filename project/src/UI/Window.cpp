@@ -1,69 +1,48 @@
-//
-// Created by Rostyslav on 28.11.2023.
-//
-
 #include "Window.h"
 
-Window::Window() {}
+Window::Window() {
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    this->width = desktop.width;
+    this->height = desktop.height;
 
-int Window::getWidth() {
-    return width;
+    _window.create(sf::VideoMode(this->width, this->height), "Drawing Application");
+    _gui.setTarget(_window);
+
+    // Calculate canvas size and initialize it
+    int canvasWidth = static_cast<int>(this->width/1.02);
+    int canvasHeight = static_cast<int>(this->height/1.05);
+    _canvas = new Canvas(canvasWidth, canvasHeight);
+
+    float canvasX = (this->width - _canvas->getWidth()) / 2.0f; // Horizontally center
+    float canvasY = this->height - _canvas->getHeight();        // At the bottom
+
+    _canvas->setPosition(canvasX, canvasY);
+
+    // Initialize GUI elements here if any
 }
 
-void Window::setWidth(int _width) {
-    width = _width;
-}
 
-int Window::getHeight() {
-    return height;
-}
-
-void Window::setHeight(int _height) {
-    height = _height;
-}
-
-void Window::Update() {
-
+void Window::run() {
     sf::Clock clock;
-    sf::Time timeSinceLastUpdate = sf::Time::Zero;
-    sf::Time timePerFrame = sf::seconds(1.0f / fps);
-
-
-
-    while (window.isOpen()) {
-        sf::Time elapsedTime = clock.restart();
-        timeSinceLastUpdate += elapsedTime;
-        while (timeSinceLastUpdate > timePerFrame) {
-            timeSinceLastUpdate -= timePerFrame;
-            sf::Event event{};
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
-                    window.close();
-                }
-                gui.handleEvent(event);
-            }
+    while (_window.isOpen()) {
+        sf::Event event;
+        while (_window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                _window.close();
+            _canvas->handleEvent(event);
+            _gui.handleEvent(event); // If you have GUI events
         }
 
-        // Clear screen with white color
-        window.clear(sf::Color::Black);
-        // Draw your GUI
-        gui.draw();
-
-        // Display everything
-        window.display();
-
-        // GraphDisplay
+        if (clock.getElapsedTime().asSeconds() >= 1.f / fps) {
+            clock.restart();
+            _window.clear();
+            _canvas->draw(_window);
+            _gui.draw(); // Draw GUI elements
+            _window.display();
+        }
     }
 }
 
-
-void Window::CreateWindow() {
-    window.create(sf::VideoMode(width, height),"PaintX");
-    gui.setTarget(window);
-    // will be added UI elemnts here, i dont really want to implement my own vision of buttons with SFML, so it will be TGUI
-
-}
-
 sf::RenderWindow& Window::getWindow() {
-    return window;
+    return _window;
 }
