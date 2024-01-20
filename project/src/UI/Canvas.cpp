@@ -5,7 +5,7 @@ Canvas::Canvas(int width, int height) : canvasWidth(width), canvasHeight(height)
         canvasSprite = new sf::Sprite(renderTexture->getTexture());
     }
 
-    renderTexture->clear(sf::Color::Blue);
+    renderTexture->clear(sf::Color::White);
 }
 
 Canvas::~Canvas() {

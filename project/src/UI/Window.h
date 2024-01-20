@@ -11,7 +11,7 @@ public:
 
 private:
     sf::RenderWindow _window;
-    tgui::Gui _gui;
+    tgui::Gui* _gui;
     Canvas* _canvas;
     UIBar* _uiBar;
     double barHeight = 0.1;
