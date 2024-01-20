@@ -6,6 +6,7 @@
 class Window {
 public:
     Window();
+    ~Window();
     void run();
     sf::RenderWindow& getWindow();
 

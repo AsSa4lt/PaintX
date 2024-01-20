@@ -24,3 +24,18 @@ void UIBar::draw(sf::RenderWindow& window){
 	window.draw(*sprite);
     _shapeSelector->draw(window);
 }
+
+void UIBar::handleEvent(sf::Event& event){
+}
+
+int UIBar::getWidth(){
+    return renderTexture->getSize().x;
+}
+
+int UIBar::getHeight(){
+    return renderTexture->getSize().y;
+}
+
+sf::Vector2f UIBar::getPosition(){
+    return sprite->getPosition();
+}

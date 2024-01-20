@@ -6,6 +6,8 @@ Canvas::Canvas(int width, int height) : canvasWidth(width), canvasHeight(height)
     }
 
     renderTexture->clear(sf::Color::White);
+	// init objects vector
+    objects = std::vector<std::shared_ptr<Object>>();
 }
 
 Canvas::~Canvas() {
@@ -14,16 +16,24 @@ Canvas::~Canvas() {
 }
 
 void Canvas::handleEvent(const sf::Event& event) {
-    // Handle events here...
+    	
 }
 
 void Canvas::draw(sf::RenderWindow& window) {
     renderTexture->display();
-    window.draw(*canvasSprite);
+    //draw each object
+    for(auto& obj : objects) {
+		obj->draw(window);
+	}
+	window.draw(*canvasSprite);
 }
 
 void Canvas::setPosition(float x, float y) {
     canvasSprite->setPosition(x, y);
+}
+
+sf::Vector2f Canvas::getPosition() const{
+    return canvasSprite->getPosition();
 }
 
 int Canvas::getWidth() const {

@@ -9,6 +9,10 @@ class UIBar {
 	~UIBar(); // Destructor to handle cleanup
 
 	void draw(sf::RenderWindow& window);
+	void handleEvent(sf::Event& event);
+	int getWidth();
+	int getHeight();
+	sf::Vector2f getPosition();
 private:
 	sf::RenderTexture* renderTexture;
 	sf::Sprite* sprite;
