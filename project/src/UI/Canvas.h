@@ -2,17 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include "Objects/Object.h"
 
-/* Canvas will have a list of objects inside it, that will be rendered and shown*/
-enum class Instrument {
-    NONE,
-	PENCIL,
-	ERASER,
-	LINE,
-	RECTANGLE,
-	ELLIPS,
-	TRIANGLE,
-	SELECT
-};
 
 
 class Canvas {
@@ -38,6 +27,5 @@ private:
     sf::Sprite* canvasSprite;
     int canvasWidth;
     int canvasHeight;
-    Instrument currentInstrument = Instrument::PENCIL;
 };
 
