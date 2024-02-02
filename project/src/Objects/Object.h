@@ -19,4 +19,8 @@ public:
 		this->end = end;
 		this->color = color;
 	}
-};
+	// update the end position
+	void setEnd(sf::Vector2f end) {
+		this->end = end;
+	}
+};		

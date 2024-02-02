@@ -2,7 +2,7 @@
 #include "Controller.h"
 
 Instrument Controller::instrument = Instrument::LINE;
-sf::Color Controller::color = sf::Color::Black;
+sf::Color Controller::color = sf::Color::Green;
 std::vector<Object*> Controller::objects;
 Object* Controller::currentObject = nullptr;
 

@@ -36,32 +36,18 @@ void Window::run() {
             if (event.type == sf::Event::Closed)
                 _window.close();
 
-            // canvas and uibar should hanlde event only if mouse is on it
-            if (event.type == sf::Event::MouseMoved) {
-				sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
-				if (mousePos.x >= _canvas->getPosition().x && mousePos.x <= _canvas->getPosition().x + _canvas->getWidth() &&
-					mousePos.y >= _canvas->getPosition().y && mousePos.y <= _canvas->getPosition().y + _canvas->getHeight()) {
-					_canvas->handleEvent(event);
-				}
-                else if (mousePos.x >= _uiBar->getPosition().x && mousePos.x <= _uiBar->getPosition().x + _uiBar->getWidth() &&
-                    mousePos.y >= _uiBar->getPosition().y && mousePos.y <= _uiBar->getPosition().y + _uiBar->getHeight()) {
-                    _uiBar->handleEvent(event);
-                }
-			}
 
-            // implementing the main mechanism of the program
-            // if user clicks on canvas and holds the mouse button
-            // then draw a line from the previous position to the current position
-            if (event.type == sf::Event::MouseButtonPressed) {
-				if (event.mouseButton.button == sf::Mouse::Left) {
-					sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
-					if (mousePos.x >= _canvas->getPosition().x && mousePos.x <= _canvas->getPosition().x + _canvas->getWidth() &&
-						mousePos.y >= _canvas->getPosition().y && mousePos.y <= _canvas->getPosition().y + _canvas->getHeight()) {
-						_canvas->handleEvent(event);
-					}
-				}
+			sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
+			if (mousePos.x >= _canvas->getPosition().x && mousePos.x <= _canvas->getPosition().x + _canvas->getWidth() &&
+				mousePos.y >= _canvas->getPosition().y && mousePos.y <= _canvas->getPosition().y + _canvas->getHeight()) {
+				_canvas->handleEvent(event, _window);
 			}
+            else if (mousePos.x >= _uiBar->getPosition().x && mousePos.x <= _uiBar->getPosition().x + _uiBar->getWidth() &&
+                mousePos.y >= _uiBar->getPosition().y && mousePos.y <= _uiBar->getPosition().y + _uiBar->getHeight()) {
+                _uiBar->handleEvent(event);
+            }
 
+ 
             _gui->handleEvent(event); 
         }
 
