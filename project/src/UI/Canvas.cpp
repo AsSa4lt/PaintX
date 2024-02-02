@@ -7,7 +7,6 @@ Canvas::Canvas(int width, int height) : canvasWidth(width), canvasHeight(height)
 
     renderTexture->clear(sf::Color::White);
 	// init objects vector
-    objects = std::vector<std::shared_ptr<Object>>();
 }
 
 Canvas::~Canvas() {
@@ -16,16 +15,37 @@ Canvas::~Canvas() {
 }
 
 void Canvas::handleEvent(const sf::Event& event) {
-    	
+    // logic is simple, as in Paint, if we click and hold, draw(will we implemented)
+	// if we release, stop drawing
+	if (event.type == sf::Event::MouseButtonPressed && !isDrawing) {
+		if (event.mouseButton.button == sf::Mouse::Left) {
+			// remeber startPosition
+			startPosition = sf::Mouse::getPosition();
+			isDrawing = true;
+			
+		}
+	}
+	else if (event.type == sf::Event::MouseButtonReleased) {
+		if (event.mouseButton.button == sf::Mouse::Left) {
+			// release the last object
+			isDrawing = false;
+		}
+	}
+	else if (event.type == sf::Event::MouseMoved) {
+		// if we are holding the mouse, update current object
+		
+	}
 }
 
 void Canvas::draw(sf::RenderWindow& window) {
-    renderTexture->display();
-    //draw each object
-    for(auto& obj : objects) {
-		obj->draw(window);
+    // get all objects and draw them from Controller
+	for (auto& object : Controller::getObjects()) {
+		object->draw(window);
 	}
-	window.draw(*canvasSprite);
+
+	// draw current object if not nullptr
+	if (Controller::getCurrentObject() != nullptr)
+		Controller::getCurrentObject()->draw(window);
 }
 
 void Canvas::setPosition(float x, float y) {

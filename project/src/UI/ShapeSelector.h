@@ -1,3 +1,5 @@
+
+#pragma once
 /* Selector of shapes
 it will have a list of shapes: lines, rectangles, ellipses, triangles
 it will have current shape

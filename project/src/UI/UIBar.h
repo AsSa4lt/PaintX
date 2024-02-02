@@ -1,3 +1,4 @@
+#pragma once
 /* Class for UIBar*/
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>

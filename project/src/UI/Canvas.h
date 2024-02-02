@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Objects/Object.h"
-
-
+#include "Controllers/Controller.h"
+#include "Canvas.h"
 
 class Canvas {
 public:
@@ -17,10 +17,7 @@ public:
     int getWidth() const;
     int getHeight() const;
     bool isDrawing = false;
-    sf::Vector2f startPosition = sf::Vector2f(0, 0);
-
-    // vector of objects
-    std::vector<std::shared_ptr<Object>> objects;
+    sf::Vector2i startPosition = sf::Vector2i(0, 0);
 
 private:
     sf::RenderTexture* renderTexture;
