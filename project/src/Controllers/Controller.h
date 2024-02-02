@@ -15,6 +15,12 @@ enum class Instrument {
 	SELECT
 };
 
+enum class LineSize {
+	SMALL,
+	MEDIUM,
+	LARGE
+};
+
 class Controller {
 public:
 	static Instrument instrument;
@@ -29,4 +35,7 @@ public:
 	// gettter and setter for current object
 	static void setCurrentObject(Object* object);
 	static Object* getCurrentObject();
+	static LineSize lineSize;
+	static void setLineSize(LineSize lineSize);
+	static float getLineSize();
 };

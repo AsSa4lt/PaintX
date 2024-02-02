@@ -14,7 +14,7 @@ public:
 	static Object* createObject(const sf::Vector2f& start, const sf::Vector2f& end) {
 		if (Controller::getInstrument() == Instrument::LINE) {
 			// create a line
-			return new Line(start, end, Controller::color);
+			return new Line(start, end, Controller::color, Controller::getLineSize());
 		}
 		return nullptr;
 	}

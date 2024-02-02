@@ -23,8 +23,10 @@ void Canvas::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
 			isDrawing = true;
 			// get position by percentage of screen, convert start position to percentage
 			sf::Vector2f mouse = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-			
-			Object* object = ObjectsFactory::createObject(mouse, mouse);
+			// convert to percentage
+			sf::Vector2f start = sf::Vector2f(mouse.x / window.getSize().x, mouse.y / window.getSize().y);
+
+			Object* object = ObjectsFactory::createObject(start, start);
 			Controller::setCurrentObject(object);
 		}
 	}
@@ -41,6 +43,9 @@ void Canvas::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
 		// update the end position of the object
 		if (isDrawing) {
 			sf::Vector2f mouse = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+			// convert to percentage
+			mouse.x /= window.getSize().x;
+			mouse.y /= window.getSize().y;
 			Controller::getCurrentObject()->setEnd(mouse);
 		}
 	}

@@ -11,13 +11,16 @@ protected:
 	sf::Vector2f end;
 	// color of the object
 	sf::Color color;
+	// width of line
+	float width;
 public:
 	virtual void draw(sf::RenderWindow& window) = 0;
 	// constructor
-	Object(sf::Vector2f start, sf::Vector2f end, sf::Color color) {
+	Object(sf::Vector2f start, sf::Vector2f end, sf::Color color, float width) {
 		this->start = start;
 		this->end = end;
 		this->color = color;
+		this->width = width;
 	}
 	// update the end position
 	void setEnd(sf::Vector2f end) {
