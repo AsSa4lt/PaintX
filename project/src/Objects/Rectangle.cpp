@@ -10,7 +10,7 @@ void Rectangle::draw(sf::RenderWindow& window) {
     sf::Vector2f actualBottomLeft(actualTopLeft.x, actualBottomRight.y);
 
     // Line thickness for offset calculation
-    float halfWidth = width / 2.0f;
+    float RealWidth = width / 2.0f;
 
     if (isFilled) {
         // Create and draw a filled rectangle
@@ -23,25 +23,25 @@ void Rectangle::draw(sf::RenderWindow& window) {
         // Draw the outline by extending the sides to overlap at the corners
         sf::Vertex vertices[] = {
             // Top side
-            sf::Vertex(actualTopLeft + sf::Vector2f(-halfWidth, halfWidth), color),
-            sf::Vertex(actualTopRight + sf::Vector2f(halfWidth, halfWidth), color),
-            sf::Vertex(actualTopRight + sf::Vector2f(halfWidth, -halfWidth), color),
-            sf::Vertex(actualTopLeft + sf::Vector2f(-halfWidth, -halfWidth), color),
+            sf::Vertex(actualTopLeft + sf::Vector2f(-RealWidth, RealWidth), color),
+            sf::Vertex(actualTopRight + sf::Vector2f(RealWidth, RealWidth), color),
+            sf::Vertex(actualTopRight + sf::Vector2f(RealWidth, -RealWidth), color),
+            sf::Vertex(actualTopLeft + sf::Vector2f(-RealWidth, -RealWidth), color),
             // Right side
-            sf::Vertex(actualTopRight + sf::Vector2f(-halfWidth, -halfWidth), color),
-            sf::Vertex(actualBottomRight + sf::Vector2f(-halfWidth, halfWidth), color),
-            sf::Vertex(actualBottomRight + sf::Vector2f(halfWidth, halfWidth), color),
-            sf::Vertex(actualTopRight + sf::Vector2f(halfWidth, -halfWidth), color),
+            sf::Vertex(actualTopRight + sf::Vector2f(-RealWidth, -RealWidth), color),
+            sf::Vertex(actualBottomRight + sf::Vector2f(-RealWidth, RealWidth), color),
+            sf::Vertex(actualBottomRight + sf::Vector2f(RealWidth, RealWidth), color),
+            sf::Vertex(actualTopRight + sf::Vector2f(RealWidth, -RealWidth), color),
             // Bottom side
-            sf::Vertex(actualBottomRight + sf::Vector2f(halfWidth, -halfWidth), color),
-            sf::Vertex(actualBottomLeft + sf::Vector2f(-halfWidth, -halfWidth), color),
-            sf::Vertex(actualBottomLeft + sf::Vector2f(-halfWidth, halfWidth), color),
-            sf::Vertex(actualBottomRight + sf::Vector2f(halfWidth, halfWidth), color),
+            sf::Vertex(actualBottomRight + sf::Vector2f(RealWidth, -RealWidth), color),
+            sf::Vertex(actualBottomLeft + sf::Vector2f(-RealWidth, -RealWidth), color),
+            sf::Vertex(actualBottomLeft + sf::Vector2f(-RealWidth, RealWidth), color),
+            sf::Vertex(actualBottomRight + sf::Vector2f(RealWidth, RealWidth), color),
             // Left side
-            sf::Vertex(actualBottomLeft + sf::Vector2f(-halfWidth, halfWidth), color),
-            sf::Vertex(actualTopLeft + sf::Vector2f(-halfWidth, -halfWidth), color),
-            sf::Vertex(actualTopLeft + sf::Vector2f(halfWidth, -halfWidth), color),
-            sf::Vertex(actualBottomLeft + sf::Vector2f(halfWidth, halfWidth), color)
+            sf::Vertex(actualBottomLeft + sf::Vector2f(-RealWidth, RealWidth), color),
+            sf::Vertex(actualTopLeft + sf::Vector2f(-RealWidth, -RealWidth), color),
+            sf::Vertex(actualTopLeft + sf::Vector2f(RealWidth, -RealWidth), color),
+            sf::Vertex(actualBottomLeft + sf::Vector2f(RealWidth, RealWidth), color)
         };
 
         // Draw the thick lines for the rectangle

@@ -4,15 +4,17 @@
 #include <SFML/Graphics.hpp>
 #include "Objects/Object.h"
 
-enum class Instrument {
+enum class Shapes {
 	NONE,
-	PENCIL,
-	ERASER,
 	LINE,
 	RECTANGLE,
 	ELLIPS,
 	TRIANGLE,
-	SELECT
+};
+
+enum class Instruments {
+	ERASER,
+	SELECTOR
 };
 
 enum class LineSize {
@@ -23,7 +25,7 @@ enum class LineSize {
 
 class Controller {
 private:
-	static Instrument instrument;
+	static Shapes instrument;
 	static sf::Color color;
 	static std::vector<Object*> objects;
 	// current object
@@ -38,8 +40,8 @@ public:
 	static Object* getCurrentObject();
 	static void AddObject(Object* object);
 	static const std::vector<Object*> getObjects();
-	static void setInstrument(Instrument instrument);
-	static Instrument getInstrument();
+	static void setShape(Shapes instrument);
+	static Shapes getShape();
 	static void setColor(sf::Color color);
 	static sf::Color getColor();
 	static void setIsFilled(bool isFilled);

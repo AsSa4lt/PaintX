@@ -14,6 +14,7 @@ protected:
 	bool isFilled;
 	// width of line
 	float width;
+	bool isSelected;
 public:
 	virtual void draw(sf::RenderWindow& window) = 0;
 	// constructor
@@ -23,6 +24,7 @@ public:
 		this->color = color;
 		this->width = width;
 		this->isFilled = isFilled;
+		this->isSelected = false;
 	}
 	// update the end position
 	void setEnd(sf::Vector2f end) {
