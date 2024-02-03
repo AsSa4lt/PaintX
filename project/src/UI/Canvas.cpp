@@ -62,6 +62,8 @@ void Canvas::draw(sf::RenderWindow& window) {
 	// draw current object if not nullptr
 	if (Controller::getCurrentObject() != nullptr)
 		Controller::getCurrentObject()->draw(window);
+
+	// clear the rendeer 
 }
 
 void Canvas::setPosition(float x, float y) {

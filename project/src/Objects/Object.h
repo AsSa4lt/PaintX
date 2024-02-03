@@ -9,18 +9,20 @@ protected:
 	// will have it start position and end position, it should use percentage of the screen, use vector2f
 	sf::Vector2f start;
 	sf::Vector2f end;
-	// color of the object
+	// color of t
 	sf::Color color;
+	bool isFilled;
 	// width of line
 	float width;
 public:
 	virtual void draw(sf::RenderWindow& window) = 0;
 	// constructor
-	Object(sf::Vector2f start, sf::Vector2f end, sf::Color color, float width) {
+	Object(sf::Vector2f start, sf::Vector2f end, sf::Color color, float width, bool isFilled) {
 		this->start = start;
 		this->end = end;
 		this->color = color;
 		this->width = width;
+		this->isFilled = isFilled;
 	}
 	// update the end position
 	void setEnd(sf::Vector2f end) {

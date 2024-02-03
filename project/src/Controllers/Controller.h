@@ -22,20 +22,26 @@ enum class LineSize {
 };
 
 class Controller {
-public:
+private:
 	static Instrument instrument;
 	static sf::Color color;
-	static void setInstrument(Instrument instrument);
-	static Instrument getInstrument();
 	static std::vector<Object*> objects;
-	static void AddObject(Object* object);
-	static const std::vector<Object*> getObjects();
 	// current object
 	static Object* currentObject;
 	// gettter and setter for current object
-	static void setCurrentObject(Object* object);
-	static Object* getCurrentObject();
 	static LineSize lineSize;
+	static bool isFilled;
+public:
 	static void setLineSize(LineSize lineSize);
 	static float getLineSize();
+	static void setCurrentObject(Object* object);
+	static Object* getCurrentObject();
+	static void AddObject(Object* object);
+	static const std::vector<Object*> getObjects();
+	static void setInstrument(Instrument instrument);
+	static Instrument getInstrument();
+	static void setColor(sf::Color color);
+	static sf::Color getColor();
+	static void setIsFilled(bool isFilled);
+	static bool getIsFilled();
 };

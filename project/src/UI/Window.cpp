@@ -36,7 +36,11 @@ void Window::run() {
             if (event.type == sf::Event::Closed)
                 _window.close();
 
-
+            if (event.type == sf::Event::Resized) {
+                // Update the view to the new size of the window
+                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                _window.setView(sf::View(visibleArea));
+            }
 			sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
 			if (mousePos.x >= _canvas->getPosition().x && mousePos.x <= _canvas->getPosition().x + _canvas->getWidth() &&
 				mousePos.y >= _canvas->getPosition().y && mousePos.y <= _canvas->getPosition().y + _canvas->getHeight()) {
