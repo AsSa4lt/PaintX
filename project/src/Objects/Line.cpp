@@ -70,3 +70,7 @@ bool Line::isInside(sf::Vector2f point, sf::RenderWindow& window)
     // If the distance from the point to the line is less than the width, it's "inside"
     return distanceSquared <= (width / 2.0f) * (width / 2.0f);
 }
+
+std::string Line::getType(){
+	return "Line";
+}

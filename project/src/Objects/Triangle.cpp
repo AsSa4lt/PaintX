@@ -107,3 +107,8 @@ bool Triangle::isInside(sf::Vector2f point, sf::RenderWindow& window) {
             checkLine(point, thirdCorner, firstCorner);
     }
 }
+
+std::string Triangle::getType()
+{
+    return std::string();
+}

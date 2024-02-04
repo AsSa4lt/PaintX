@@ -10,4 +10,5 @@ public:
 
 	bool isInside(sf::Vector2f point, sf::RenderWindow& window) override;
 
+	std::string getType() override;
 };

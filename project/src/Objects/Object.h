@@ -31,4 +31,11 @@ public:
 		this->end = end;
 	}
 	virtual bool isInside(sf::Vector2f point, sf::RenderWindow& window) = 0;
-};		
+	virtual std::string getType() = 0;
+
+	sf::Color getColor();
+	sf::Vector2f getStart();
+	sf::Vector2f getEnd();
+	float getLineWidth();
+	bool getFilled();
+};

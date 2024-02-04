@@ -86,3 +86,7 @@ bool Ellipse::isInside(sf::Vector2f point, sf::RenderWindow& window) {
     }
 }
 
+std::string Ellipse::getType(){
+    return "Ellipse";
+}
+

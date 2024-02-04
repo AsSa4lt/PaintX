@@ -78,3 +78,7 @@ bool Rectangle::isInside(sf::Vector2f point, sf::RenderWindow& window)
     }
 }
 
+std::string Rectangle::getType(){
+    return "Rectangle";
+}
+
