@@ -19,7 +19,6 @@ public:
     int getHeight() const;
     bool isDrawing = false;
     sf::Vector2i startPosition = sf::Vector2i(0, 0);
-
 private:
     sf::RenderTexture* renderTexture;
     sf::Sprite* canvasSprite;

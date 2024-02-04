@@ -8,7 +8,7 @@ enum class Shapes {
 	NONE,
 	LINE,
 	RECTANGLE,
-	ELLIPS,
+	ELLIPSE,
 	TRIANGLE,
 };
 

@@ -6,7 +6,7 @@ UIBar::UIBar(int width, int height, tgui::Gui& gui){
         sprite = new sf::Sprite(renderTexture->getTexture());
     }
     // set grey background
-    renderTexture->clear(sf::Color(50, 50, 50));
+    renderTexture->clear(sf::Color(20, 20, 20));
     // set position
     sprite->setPosition(0, 0);  
     _gui = &gui;

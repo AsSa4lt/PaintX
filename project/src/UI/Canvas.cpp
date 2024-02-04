@@ -56,7 +56,8 @@ void Canvas::draw(sf::RenderWindow& window) {
 	window.draw(*canvasSprite);
     // get all objects and draw them from Controller
 	for (auto& object : Controller::getObjects()) {
-		object->draw(window);
+		if(object != nullptr)
+			object->draw(window);
 	}
 
 	// draw current object if not nullptr

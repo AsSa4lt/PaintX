@@ -10,17 +10,17 @@ Window::Window() {
     _gui->setTarget(_window);
 
     // Calculate canvas size and initialize it
-    int canvasWidth = static_cast<int>(this->width);
-    int canvasHeight = static_cast<int>(this->height * (1-barHeight));
+    int canvasWidth = static_cast<int>(sf::VideoMode::getDesktopMode().width);
+    int canvasHeight = static_cast<int>(sf::VideoMode::getDesktopMode().height * (1-barHeight));
     _canvas = new Canvas(canvasWidth, canvasHeight);
 
     float canvasX = (this->width - _canvas->getWidth()) / 2.0f; // Horizontally center
-    float canvasY = this->height - _canvas->getHeight();        // At the bottom
+    float canvasY = this->height*barHeight;        // At the bottom
 
     _canvas->setPosition(canvasX, canvasY);
 
     // init uibar
-    _uiBar = new UIBar(this->width, this->height * barHeight, *_gui);
+    _uiBar = new UIBar(sf::VideoMode::getDesktopMode().width, this->height * barHeight, *_gui);
 }
 
 Window::~Window() {
@@ -37,8 +37,19 @@ void Window::run() {
                 _window.close();
 
             if (event.type == sf::Event::Resized) {
+                // Enforce minimum size constraints
+                unsigned int newWidth = std::max(event.size.width, static_cast<unsigned int>(_window.getSize().x * MINIMUM_WIDTH));
+                unsigned int newHeight = std::max(event.size.height, static_cast<unsigned int>(_window.getSize().y * MINIMUM_HEIGHT));
+
+                // If the new size is less than half the screen size, adjust the window size
+                if (newWidth < sf::VideoMode::getDesktopMode().width / 2 || newHeight < sf::VideoMode::getDesktopMode().height / 2) {
+                    newWidth = std::max(newWidth, sf::VideoMode::getDesktopMode().width / 2);
+                    newHeight = std::max(newHeight, sf::VideoMode::getDesktopMode().height / 2);
+                    _window.setSize(sf::Vector2u(newWidth, newHeight));
+                }
+
                 // Update the view to the new size of the window
-                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                sf::FloatRect visibleArea(0, 0, newWidth, newHeight);
                 _window.setView(sf::View(visibleArea));
             }
 			sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
@@ -57,9 +68,9 @@ void Window::run() {
 
         if (clock.getElapsedTime().asSeconds() >= 1.f / fps) {
             clock.restart();
-            _window.clear();
-            _uiBar->draw(_window);
+            _window.clear(sf::Color::White);
             _canvas->draw(_window);
+            _uiBar->draw(_window);
             _gui->draw(); // Draw GUI elements
             _window.display();
         }

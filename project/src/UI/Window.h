@@ -4,6 +4,7 @@
 #include <TGUI/TGUI.hpp>
 #include "Canvas.h"
 #include "UIBar.h"
+#include "Utils/Config.h"
 
 class Window {
 public:
@@ -17,7 +18,7 @@ private:
     tgui::Gui* _gui;
     Canvas* _canvas;
     UIBar* _uiBar;
-    double barHeight = 0.1;
+    double barHeight = 0.08;
     int width = 800;
     int height = 600;
     static constexpr int fps = 60;

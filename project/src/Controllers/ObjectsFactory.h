@@ -22,7 +22,7 @@ public:
 		else if (Controller::getShape() == Shapes::RECTANGLE) {
 			return new Rectangle(start, end, Controller::getColor(), Controller::getLineSize(), Controller::getIsFilled());
 		}
-		else if (Controller::getShape() == Shapes::ELLIPS) {
+		else if (Controller::getShape() == Shapes::ELLIPSE) {
 			return new Ellipse(start, end, Controller::getColor(), Controller::getLineSize(), Controller::getIsFilled());
 		}
 		else if (Controller::getShape() == Shapes::TRIANGLE) {
