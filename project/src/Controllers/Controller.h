@@ -12,13 +12,14 @@ enum class Shapes {
 	TRIANGLE,
 };
 
-enum class Instrument {
+enum class Tool {
 	NONE,
 	ERASER,
 	SELECTOR
 };
 
 enum class LineSize {
+	NONE,
 	SMALL,
 	MEDIUM,
 	LARGE
@@ -29,7 +30,7 @@ private:
 	static Shapes shape;
 	static sf::Color color;
 	static std::vector<Object*> objects;
-	static Instrument instrument;
+	static Tool instrument;
 	// current object
 	static Object* currentObject;
 	// gettter and setter for current object
@@ -48,4 +49,8 @@ public:
 	static sf::Color getColor();
 	static void setIsFilled(bool isFilled);
 	static bool getIsFilled();
+	static LineSize getLineSizeParameter();
+	static void setTool(Tool tool);
+	static Tool getTool();
+	static void RemoveObject(Object* object);
 };

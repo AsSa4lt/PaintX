@@ -28,6 +28,14 @@ void Canvas::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
 
 			Object* object = ObjectsFactory::createObject(start, start);
 			Controller::setCurrentObject(object);
+
+			if (Controller::getTool() == Tool::ERASER) {
+				for(auto& object : Controller::getObjects()) {
+					if (object != nullptr && object->isInside(mouse, window)) {
+						Controller::RemoveObject(object);
+					}
+				}
+			}
 		}
 	}
 	else if (event.type == sf::Event::MouseButtonReleased) {
@@ -46,7 +54,8 @@ void Canvas::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
 			// convert to percentage
 			mouse.x /= window.getSize().x;
 			mouse.y /= window.getSize().y;
-			Controller::getCurrentObject()->setEnd(mouse);
+			if(Controller::getCurrentObject() != nullptr)
+				Controller::getCurrentObject()->setEnd(mouse);
 		}
 	}
 }

@@ -51,3 +51,38 @@ void Ellipse::draw(sf::RenderWindow& window) {
     // Now draw the outline
     window.draw(&outlineVertices[0], outlineVertices.size(), sf::Quads);
 }
+
+bool Ellipse::isInside(sf::Vector2f point, sf::RenderWindow& window) {
+    // Calculate the center of the ellipse
+    sf::Vector2f center(start.x * window.getSize().x + (end.x - start.x) * window.getSize().x / 2.0f,
+        start.y * window.getSize().y + (end.y - start.y) * window.getSize().y / 2.0f);
+
+    // Calculate the radii of the ellipse
+    float a = (end.x - start.x) * window.getSize().x / 2.0f; // Horizontal radius
+    float b = (end.y - start.y) * window.getSize().y / 2.0f; // Vertical radius
+
+    // Adjust the point's coordinates to be relative to the ellipse's center
+    sf::Vector2f relativePoint = point - center;
+
+    if (isFilled) {
+        // For a filled ellipse, check if the point is within the ellipse bounds
+        return (relativePoint.x * relativePoint.x) / (a * a) + (relativePoint.y * relativePoint.y) / (b * b) <= 1;
+    }
+    else {
+        // For an outlined ellipse, calculate outer and inner radii based on the outline width
+        float realWidth = width; // The actual outline width of the ellipse
+        float aOuter = a + realWidth / 2.0f;
+        float bOuter = b + realWidth / 2.0f;
+        float aInner = std::max(0.0f, a - realWidth / 2.0f); // Ensure inner radii are not negative
+        float bInner = std::max(0.0f, b - realWidth / 2.0f);
+
+        // Check if the point is within the outer ellipse
+        bool withinOuter = (relativePoint.x * relativePoint.x) / (aOuter * aOuter) + (relativePoint.y * relativePoint.y) / (bOuter * bOuter) <= 1;
+        // Check if the point is outside the inner ellipse
+        bool outsideInner = (relativePoint.x * relativePoint.x) / (aInner * aInner) + (relativePoint.y * relativePoint.y) / (bInner * bInner) >= 1;
+
+        // The point is considered near the outline if it's within the outer ellipse and outside the inner ellipse
+        return withinOuter && outsideInner;
+    }
+}
+

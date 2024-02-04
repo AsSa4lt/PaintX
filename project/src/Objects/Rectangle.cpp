@@ -52,3 +52,29 @@ void Rectangle::draw(sf::RenderWindow& window) {
     }
 }
 
+bool Rectangle::isInside(sf::Vector2f point, sf::RenderWindow& window)
+{
+    // Calculate actual corner positions based on current window size
+    sf::Vector2f actualTopLeft(start.x * window.getSize().x, start.y * window.getSize().y);
+    sf::Vector2f actualBottomRight(end.x * window.getSize().x, end.y * window.getSize().y);
+
+    if (isFilled) {
+        // For a filled rectangle, we check if the point is within the rectangle bounds
+        return (point.x >= actualTopLeft.x && point.x <= actualBottomRight.x &&
+            point.y >= actualTopLeft.y && point.y <= actualBottomRight.y);
+    }
+    else {
+        // For an unfilled rectangle, we check if the point is near any of the four sides
+        float halfWidth = width / 2.0f;
+
+        // Define the four sides as lines
+        sf::FloatRect top(actualTopLeft.x - halfWidth, actualTopLeft.y - halfWidth, actualBottomRight.x - actualTopLeft.x + width, width);
+        sf::FloatRect bottom(actualTopLeft.x - halfWidth, actualBottomRight.y - halfWidth, actualBottomRight.x - actualTopLeft.x + width, width);
+        sf::FloatRect left(actualTopLeft.x - halfWidth, actualTopLeft.y - halfWidth, width, actualBottomRight.y - actualTopLeft.y + width);
+        sf::FloatRect right(actualBottomRight.x - halfWidth, actualTopLeft.y - halfWidth, width, actualBottomRight.y - actualTopLeft.y + width);
+
+        // Check if the point is inside any of the four sides
+        return top.contains(point) || bottom.contains(point) || left.contains(point) || right.contains(point);
+    }
+}
+

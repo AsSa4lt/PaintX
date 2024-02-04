@@ -10,4 +10,6 @@ public:
 	void drawThickLine(sf::RenderWindow& window, sf::Vertex start, sf::Vertex end, float thickness, sf::Color color);
 	// constructor, the same as Object
 	Triangle(sf::Vector2f start, sf::Vector2f end, sf::Color color, float width, bool isFilled) : Object(start, end, color, width, isFilled) {}
+	
+	bool isInside(sf::Vector2f point, sf::RenderWindow& window) override;
 };

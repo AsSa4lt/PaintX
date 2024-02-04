@@ -7,12 +7,12 @@ std::vector<Object*> Controller::objects;
 Object* Controller::currentObject = nullptr;
 LineSize Controller::lineSize = LineSize::LARGE;
 bool Controller::isFilled = false;
-Instrument Controller::instrument = Instrument::NONE;
+Tool Controller::instrument = Tool::NONE;
 
 
 void Controller::setShape(Shapes shape){
 	Controller::shape = shape;
-	instrument = Instrument::NONE;
+	instrument = Tool::NONE;
 }
 
 Shapes Controller::getShape(){
@@ -53,6 +53,30 @@ void Controller::setIsFilled(bool isFilled){
 
 bool Controller::getIsFilled(){
 	return isFilled;
+}
+
+LineSize Controller::getLineSizeParameter(){
+	return lineSize;
+}
+
+void Controller::setTool(Tool instrument){
+	Controller::instrument = instrument;
+	Controller::shape = Shapes::NONE;
+}
+
+Tool Controller::getTool(){
+	return instrument;
+}
+
+void Controller::RemoveObject(Object* object){
+	// Use std::remove to shift the elements to be erased to the end, then erase them
+	auto newEnd = std::remove(objects.begin(), objects.end(), object);
+
+	// Actually erase the element(s) from the vector
+	objects.erase(newEnd, objects.end());
+
+	// Optionally, if you need to delete the object as well (assuming dynamic allocation)
+	delete object;
 }
 
 

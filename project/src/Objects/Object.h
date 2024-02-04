@@ -30,4 +30,5 @@ public:
 	void setEnd(sf::Vector2f end) {
 		this->end = end;
 	}
+	virtual bool isInside(sf::Vector2f point, sf::RenderWindow& window) = 0;
 };		

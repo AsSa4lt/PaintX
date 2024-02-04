@@ -4,6 +4,8 @@
 #include <TGUI/TGUI.hpp>
 #include "ShapeSelector.h"
 #include "ColorSelector.h"
+#include "LineSelector.h"
+#include "ToolSelector.h"
 class UIBar {
 
 	public:
@@ -21,4 +23,6 @@ private:
 	tgui::Gui* _gui;
 	ShapeSelector* _shapeSelector;
 	ColorSelector* _colorSelector;
+	LineSelector* _lineSelector;
+	ToolSelector* _toolSelector;
 };

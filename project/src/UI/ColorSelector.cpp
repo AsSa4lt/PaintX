@@ -67,6 +67,11 @@ ColorSelector::ColorSelector(tgui::Gui& gui, int height, int position){
 	gui.add(_cyanColorButton);
 }
 
+float ColorSelector::GetWidth()
+{
+	return height * (1 - COLOR_BUTTON_SIZE) / 2 + (COLOR_BUTTON_SIZE + COLOR_BUTTON_SPACING) * height * 6;
+}
+
 void ColorSelector::draw(){
 	if (Controller::getColor() == sf::Color::Red)
 		_redColorButton->getRenderer()->setBorderColor(sf::Color::Red);

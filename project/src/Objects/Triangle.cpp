@@ -65,3 +65,45 @@ void Triangle::drawThickLine(sf::RenderWindow& window, sf::Vertex start, sf::Ver
 
     window.draw(thickLine);
 }
+float dot(sf::Vector2f a, sf::Vector2f b) {
+    return a.x * b.x + a.y * b.y;
+}
+
+float length(sf::Vector2f v) {
+    return std::sqrt(v.x * v.x + v.y * v.y);
+}
+
+bool Triangle::isInside(sf::Vector2f point, sf::RenderWindow& window) {
+    // Calculate actual corner positions based on current window size
+    sf::Vector2f firstCorner(start.x * window.getSize().x, start.y * window.getSize().y);
+    sf::Vector2f secondCorner(end.x * window.getSize().x, end.y * window.getSize().y);
+    sf::Vector2f thirdCorner(end.x * window.getSize().x, start.y * window.getSize().y);
+
+    // Helper lambda to calculate the sign of a determinant
+    auto sign = [](sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3) {
+        return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
+        };
+
+    bool b1, b2, b3;
+
+    b1 = sign(point, firstCorner, secondCorner) < 0.0f;
+    b2 = sign(point, secondCorner, thirdCorner) < 0.0f;
+    b3 = sign(point, thirdCorner, firstCorner) < 0.0f;
+
+    if (isFilled) {
+        // If the triangle is filled, we just need to check if the point is inside the triangle
+        return ((b1 == b2) && (b2 == b3));
+    }
+    else {
+        // If the triangle is not filled, we need to check if the point is near any of the edges
+        float lineThickness = width; // Width is assumed to be the line thickness for the triangle's outline
+        auto checkLine = [lineThickness](sf::Vector2f p, sf::Vector2f a, sf::Vector2f b) {
+            sf::Vector2f pa = p - a, ba = b - a;
+            float h = std::clamp(dot(pa, ba) / dot(ba, ba), 0.0f, 1.0f);
+            return length(pa - ba * h) < lineThickness;
+            };
+        return checkLine(point, firstCorner, secondCorner) ||
+            checkLine(point, secondCorner, thirdCorner) ||
+            checkLine(point, thirdCorner, firstCorner);
+    }
+}

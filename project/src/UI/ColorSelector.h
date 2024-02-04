@@ -29,5 +29,6 @@ private:
 	void SetButtonParameters(int index, tgui::Button::Ptr button, tgui::Texture& texture);
 public:
 	ColorSelector(tgui::Gui& gui, int height, int position);
+	float GetWidth();
 	void draw();
 };
