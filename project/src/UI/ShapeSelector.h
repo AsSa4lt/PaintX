@@ -13,7 +13,6 @@ when a button is pressed, the current shape is changed
 #include "Utils/Config.h"
 class ShapeSelector {
 private:
-	tgui::Gui* _gui;
 	tgui::Button::Ptr _rectangleButton;
 	tgui::Texture _rectangleTexture;
 	tgui::Button::Ptr _ellipseButton;
@@ -22,8 +21,11 @@ private:
 	tgui::Texture _lineTexture;
 	tgui::Button::Ptr _triangleButton;
 	tgui::Texture _triangleTexture;
+	int height;
+	void SetButtonParameters(int index, tgui::Button::Ptr button, tgui::Texture& texture);
 public:
-	void draw(sf::RenderWindow& window);
+	void draw();
 	// constructor
 	ShapeSelector(tgui::Gui& gui, int height);
+	float GetWidth();
 };

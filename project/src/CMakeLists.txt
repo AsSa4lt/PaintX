@@ -1,4 +1,4 @@
-add_executable(${APP_EXE} main.cpp "UI/Window.h" "UI/Window.cpp" "UI/Canvas.h" "UI/Canvas.cpp" "UI/UIBar.h" "UI/UIBar.cpp" "UI/ShapeSelector.h" "UI/ShapeSelector.cpp" "Utils/Saver.h" "Utils/Saver.cpp" "Objects/Object.cpp" "Objects/Object.h" "Controllers/Controller.cpp" "Objects/Line.cpp" "Controllers/ObjectsFactory.h" "Objects/Rectangle.h" "Objects/Rectangle.cpp" "Objects/Ellipse.cpp" "Objects/Triangle.h" "Objects/Triangle.cpp" "Utils/Config.h")
+add_executable(${APP_EXE} main.cpp "UI/Window.h" "UI/Window.cpp" "UI/Canvas.h" "UI/Canvas.cpp" "UI/UIBar.h" "UI/UIBar.cpp" "UI/ShapeSelector.h" "UI/ShapeSelector.cpp" "Utils/Saver.h" "Utils/Saver.cpp" "Objects/Object.cpp" "Objects/Object.h" "Controllers/Controller.cpp" "Objects/Line.cpp" "Controllers/ObjectsFactory.h" "Objects/Rectangle.h" "Objects/Rectangle.cpp" "Objects/Ellipse.cpp" "Objects/Triangle.h" "Objects/Triangle.cpp" "Utils/Config.h" "UI/ColorSelector.h" "UI/ColorSelector.cpp")
 
 target_include_directories(${APP_EXE} PRIVATE .)
 

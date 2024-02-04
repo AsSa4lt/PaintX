@@ -12,7 +12,8 @@ enum class Shapes {
 	TRIANGLE,
 };
 
-enum class Instruments {
+enum class Instrument {
+	NONE,
 	ERASER,
 	SELECTOR
 };
@@ -25,9 +26,10 @@ enum class LineSize {
 
 class Controller {
 private:
-	static Shapes instrument;
+	static Shapes shape;
 	static sf::Color color;
 	static std::vector<Object*> objects;
+	static Instrument instrument;
 	// current object
 	static Object* currentObject;
 	// gettter and setter for current object

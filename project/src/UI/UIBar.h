@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 #include "ShapeSelector.h"
+#include "ColorSelector.h"
 class UIBar {
 
 	public:
@@ -19,4 +20,5 @@ private:
 	sf::Sprite* sprite;
 	tgui::Gui* _gui;
 	ShapeSelector* _shapeSelector;
+	ColorSelector* _colorSelector;
 };

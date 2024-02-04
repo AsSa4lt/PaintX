@@ -12,6 +12,7 @@ UIBar::UIBar(int width, int height, tgui::Gui& gui){
     _gui = &gui;
 
     _shapeSelector = new ShapeSelector(*_gui, height);
+    _colorSelector = new ColorSelector(*_gui, height, _shapeSelector->GetWidth());
 }
 
 UIBar::~UIBar(){
@@ -22,7 +23,8 @@ UIBar::~UIBar(){
 void UIBar::draw(sf::RenderWindow& window){
 	renderTexture->display();
 	window.draw(*sprite);
-    _shapeSelector->draw(window);
+    _shapeSelector->draw();
+    _colorSelector->draw();
 }
 
 void UIBar::handleEvent(sf::Event& event){

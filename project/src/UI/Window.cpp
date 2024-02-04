@@ -6,7 +6,11 @@ Window::Window() {
     this->height = desktop.height * 0.8;
     _gui = new tgui::Gui(_window);
 
-    _window.create(sf::VideoMode(this->width, this->height), "Drawing Application");
+    _window.create(sf::VideoMode(this->width, this->height), "PaintX");
+    sf::Image icon;
+    if (icon.loadFromFile((std::string)PATH_TO_IMAGES + "logo.png")) { // Replace "icon.png" with the path to your icon file
+        _window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    }
     _gui->setTarget(_window);
 
     // Calculate canvas size and initialize it

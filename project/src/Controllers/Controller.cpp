@@ -1,20 +1,22 @@
 // definition of static instrument and color
 #include "Controller.h"
 
-Shapes Controller::instrument = Shapes::TRIANGLE;
+Shapes Controller::shape = Shapes::TRIANGLE;
 sf::Color Controller::color = sf::Color::Green;
 std::vector<Object*> Controller::objects;
 Object* Controller::currentObject = nullptr;
 LineSize Controller::lineSize = LineSize::LARGE;
 bool Controller::isFilled = false;
+Instrument Controller::instrument = Instrument::NONE;
 
 
-void Controller::setShape(Shapes instrument){
-	Controller::instrument = instrument;
+void Controller::setShape(Shapes shape){
+	Controller::shape = shape;
+	instrument = Instrument::NONE;
 }
 
 Shapes Controller::getShape(){
-	return instrument;
+	return shape;
 }
 
 void Controller::AddObject(Object* object){

@@ -1,6 +1,6 @@
 #include "ShapeSelector.h"
 
-void ShapeSelector::draw(sf::RenderWindow& window){
+void ShapeSelector::draw(){
     // if selected shape is rectangle, add border to rectangle button
 	if(Controller::getShape() == Shapes::RECTANGLE)
 		_rectangleButton->getRenderer()->setBorderColor(sf::Color::Red);
@@ -24,19 +24,27 @@ void ShapeSelector::draw(sf::RenderWindow& window){
 		_lineButton->getRenderer()->setBorderColor(sf::Color::Green);
 }
 
+
+
+void ShapeSelector::SetButtonParameters(int index, tgui::Button::Ptr button, tgui::Texture& texture)
+{
+	button->setPosition(height * (1 - SHAPE_BUTTON_SIZE) / 2 + (SHAPE_BUTTON_SIZE + SHAPE_BUTTON_SPACING) * height * index, height * (1 - SHAPE_BUTTON_SIZE) / 2);
+	button->setSize(height * SHAPE_BUTTON_SIZE, height * SHAPE_BUTTON_SIZE);
+	button->getRenderer()->setTexture(texture);
+	button->getRenderer()->setBorderColorFocused(sf::Color::Red);
+	button->getRenderer()->setBorders({ 2, 2, 2, 2 });
+}
+
 ShapeSelector::ShapeSelector(tgui::Gui& gui, int height){
+	this->height = height;
 	// it will be a grey rendertexture will buttons on it
 	// buttons will have images of the shapes
 	// when clicked, the shape will be selected
 	// the shape will be drawn on the canvas
 	// test button with path to image
-	_rectangleTexture = tgui::Texture("../../../../src/images/rectangle.png");
+	_rectangleTexture = tgui::Texture((std::string)PATH_TO_IMAGES+"rectangle.png");
 	_rectangleButton = tgui::Button::create();
-	_rectangleButton->setPosition(height * (1 - SHAPE_BUTTON_SIZE)/2, height * (1 - SHAPE_BUTTON_SIZE) / 2);
-	_rectangleButton->setSize(height * SHAPE_BUTTON_SIZE, height * SHAPE_BUTTON_SIZE);
-	_rectangleButton->getRenderer()->setTexture(_rectangleTexture);
-	_rectangleButton->getRenderer()->setBorderColorFocused(sf::Color::Red);
-	_rectangleButton->getRenderer()->setBorders({ 2, 2, 2, 2 });
+	SetButtonParameters(0, _rectangleButton, _rectangleTexture);
 
 	_rectangleButton->onPress([] {
 		Controller::setShape(Shapes::RECTANGLE);
@@ -44,13 +52,9 @@ ShapeSelector::ShapeSelector(tgui::Gui& gui, int height){
 	gui.add(_rectangleButton);
 
 
-	_ellipseTexture = tgui::Texture("../../../../src/images/ellipse.png");
+	_ellipseTexture = tgui::Texture((std::string)PATH_TO_IMAGES+"ellipse.png");
 	_ellipseButton = tgui::Button::create();
-	_ellipseButton->setPosition(height * (1 - SHAPE_BUTTON_SIZE) / 2 + (SHAPE_BUTTON_SIZE + SHAPE_BUTTON_SPACING) * height, height * (1 - SHAPE_BUTTON_SIZE) / 2);
-	_ellipseButton->setSize(height * SHAPE_BUTTON_SIZE, height * SHAPE_BUTTON_SIZE);
-	_ellipseButton->getRenderer()->setTexture(_ellipseTexture);
-	_ellipseButton->getRenderer()->setBorderColorFocused(sf::Color::Red);
-	_ellipseButton->getRenderer()->setBorders({ 2, 2, 2, 2 });
+	SetButtonParameters(1, _ellipseButton, _ellipseTexture);
 
 	_ellipseButton->onPress([] {
 		Controller::setShape(Shapes::ELLIPSE);
@@ -58,13 +62,9 @@ ShapeSelector::ShapeSelector(tgui::Gui& gui, int height){
 
 	gui.add(_ellipseButton);
 
-	_triangleTexture = tgui::Texture("../../../../src/images/triangle.png");
+	_triangleTexture = tgui::Texture((std::string)PATH_TO_IMAGES+"triangle.png");
 	_triangleButton = tgui::Button::create();
-	_triangleButton->setPosition(height * (1 - SHAPE_BUTTON_SIZE) / 2 + (SHAPE_BUTTON_SIZE + SHAPE_BUTTON_SPACING) * height * 2, height * (1 - SHAPE_BUTTON_SIZE) / 2);
-	_triangleButton->setSize(height * SHAPE_BUTTON_SIZE, height * SHAPE_BUTTON_SIZE);
-	_triangleButton->getRenderer()->setTexture(_triangleTexture);
-	_triangleButton->getRenderer()->setBorderColorFocused(sf::Color::Red);
-	_triangleButton->getRenderer()->setBorders({ 2, 2, 2, 2 });
+	SetButtonParameters(2, _triangleButton, _triangleTexture);
 
 	_triangleButton->onPress([] {
 		Controller::setShape(Shapes::TRIANGLE);
@@ -72,17 +72,17 @@ ShapeSelector::ShapeSelector(tgui::Gui& gui, int height){
 
 	gui.add(_triangleButton);
 
-	_lineTexture = tgui::Texture("../../../../src/images/line.png");
+	_lineTexture = tgui::Texture((std::string)PATH_TO_IMAGES+"line.png");
 	_lineButton = tgui::Button::create();
-	_lineButton->setPosition(height * (1 - SHAPE_BUTTON_SIZE) / 2 + (SHAPE_BUTTON_SIZE + SHAPE_BUTTON_SPACING) * height * 3, height * (1 - SHAPE_BUTTON_SIZE) / 2);
-	_lineButton->setSize(height * SHAPE_BUTTON_SIZE, height * SHAPE_BUTTON_SIZE);
-	_lineButton->getRenderer()->setTexture(_lineTexture);
-	_lineButton->getRenderer()->setBorderColorFocused(sf::Color::Red);
-	_lineButton->getRenderer()->setBorders({ 2, 2, 2, 2 });
+	SetButtonParameters(3, _lineButton, _lineTexture);
 
 	_lineButton->onPress([] {
 		Controller::setShape(Shapes::LINE);
 		});
 
 	gui.add(_lineButton);
+}
+
+float ShapeSelector::GetWidth(){
+	return height * (1 - SHAPE_BUTTON_SIZE) / 2 + (SHAPE_BUTTON_SIZE + SHAPE_BUTTON_SPACING) * height * 4;
 }
