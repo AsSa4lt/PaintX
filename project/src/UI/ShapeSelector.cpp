@@ -81,8 +81,23 @@ ShapeSelector::ShapeSelector(tgui::Gui& gui, int height){
 		});
 
 	gui.add(_lineButton);
+
+	_fillCheckBox = tgui::CheckBox::create();
+	_fillCheckBox->setText("Is filled");
+	_fillCheckBox->setPosition(height * (1 - SHAPE_BUTTON_SIZE) / 2 + (SHAPE_BUTTON_SIZE + SHAPE_BUTTON_SPACING) * height * 4, height * (1 - SHAPE_BUTTON_SIZE) / 2);
+	_fillCheckBox->setSize(height * SHAPE_BUTTON_SIZE, height * SHAPE_BUTTON_SIZE);
+	_fillCheckBox->getRenderer()->setTextColor(tgui::Color::White);
+	_fillCheckBox->onChange([](bool checked) {
+		if (checked) {
+			Controller::setIsFilled(true);
+		}
+		else {
+			Controller::setIsFilled(false);
+		}
+	});
+	gui.add(_fillCheckBox);
 }
 
 float ShapeSelector::GetWidth(){
-	return height * (1 - SHAPE_BUTTON_SIZE) / 2 + (SHAPE_BUTTON_SIZE + SHAPE_BUTTON_SPACING) * height * 4;
+	return height * (1 - SHAPE_BUTTON_SIZE) / 2 + (SHAPE_BUTTON_SIZE + SHAPE_BUTTON_SPACING) * height * 4 + height * SHAPE_BUTTON_SIZE * 2;
 }

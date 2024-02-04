@@ -21,6 +21,7 @@ private:
 	tgui::Texture _lineTexture;
 	tgui::Button::Ptr _triangleButton;
 	tgui::Texture _triangleTexture;
+	tgui::CheckBox::Ptr _fillCheckBox;
 	int height;
 	void SetButtonParameters(int index, tgui::Button::Ptr button, tgui::Texture& texture);
 public:
