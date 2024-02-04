@@ -32,8 +32,9 @@ ToolSelector::ToolSelector(tgui::Gui& gui, int height, int position){
 }
 
 float ToolSelector::GetWidth(){
-	return height * (1 - TOOL_BUTTON_SIZE) / 2 + (TOOL_BUTTON_SIZE + TOOL_BUTTON_SPACING) * height * 6;
+	return height * (1 - TOOL_BUTTON_SIZE) / 2 + (TOOL_BUTTON_SIZE + TOOL_BUTTON_SPACING) * height * 2;
 }
+
 
 void ToolSelector::draw(){
 	if (Controller::getTool() == Tool::ERASER)

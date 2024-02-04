@@ -53,4 +53,5 @@ public:
 	static void setTool(Tool tool);
 	static Tool getTool();
 	static void RemoveObject(Object* object);
+	static void ClearObjects();
 };

@@ -6,6 +6,7 @@
 #include "ColorSelector.h"
 #include "LineSelector.h"
 #include "ToolSelector.h"
+#include "FileTool.h"
 class UIBar {
 
 	public:
@@ -25,4 +26,5 @@ private:
 	ColorSelector* _colorSelector;
 	LineSelector* _lineSelector;
 	ToolSelector* _toolSelector;
+	FileTool* _fileTool;
 };

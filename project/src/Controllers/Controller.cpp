@@ -79,6 +79,13 @@ void Controller::RemoveObject(Object* object){
 	delete object;
 }
 
+void Controller::ClearObjects(){
+	for (auto object : objects){
+		delete object;
+	}
+	objects.clear();
+}
+
 
 float Controller::getLineSize() {
 	switch (lineSize) {
