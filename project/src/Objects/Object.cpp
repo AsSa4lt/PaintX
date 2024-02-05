@@ -1,5 +1,9 @@
 #include "Object.h"
 
+void Object::setEnd(sf::Vector2f end){
+	this->end = end;
+}
+
 sf::Color Object::getColor(){
      return color;
 }

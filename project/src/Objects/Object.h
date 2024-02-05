@@ -9,7 +9,7 @@ protected:
 	// will have it start position and end position, it should use percentage of the screen, use vector2f
 	sf::Vector2f start;
 	sf::Vector2f end;
-	// color of t
+	// color of the object
 	sf::Color color;
 	bool isFilled;
 	// width of line
@@ -27,9 +27,7 @@ public:
 		this->isSelected = false;
 	}
 	// update the end position
-	void setEnd(sf::Vector2f end) {
-		this->end = end;
-	}
+	void setEnd(sf::Vector2f end);
 	virtual bool isInside(sf::Vector2f point, sf::RenderWindow& window) = 0;
 	virtual std::string getType() = 0;
 

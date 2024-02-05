@@ -11,7 +11,7 @@ class UIBar {
 
 	public:
 	UIBar(int width, int height, tgui::Gui& gui);
-	~UIBar(); // Destructor to handle cleanup
+	~UIBar(); 
 
 	void draw(sf::RenderWindow& window);
 	void handleEvent(sf::Event& event);
