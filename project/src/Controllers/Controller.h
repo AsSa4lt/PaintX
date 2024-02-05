@@ -15,7 +15,8 @@ enum class Shapes {
 enum class Tool {
 	NONE,
 	ERASER,
-	SELECTOR
+	RESIZE,
+	MOVE
 };
 
 enum class LineSize {
@@ -33,6 +34,7 @@ private:
 	static Tool instrument;
 	// current object
 	static Object* currentObject;
+	static Object* movingObject;
 	// gettter and setter for current object
 	static LineSize lineSize;
 	static bool isFilled;
@@ -54,4 +56,6 @@ public:
 	static Tool getTool();
 	static void RemoveObject(Object* object);
 	static void ClearObjects();
+	static void setMovingObject(Object* object);
+	static Object* getMovingObject();
 };

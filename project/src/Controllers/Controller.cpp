@@ -75,15 +75,23 @@ void Controller::RemoveObject(Object* object){
 	// Actually erase the element(s) from the vector
 	objects.erase(newEnd, objects.end());
 
-	// Optionally, if you need to delete the object as well (assuming dynamic allocation)
 	delete object;
 }
 
 void Controller::ClearObjects(){
 	for (auto object : objects){
-		delete object;
+		if(object != nullptr)
+			delete object;
 	}
 	objects.clear();
+}
+
+void Controller::setMovingObject(Object* object){
+	currentObject = object;
+}
+
+Object* Controller::getMovingObject(){
+	return currentObject;
 }
 
 

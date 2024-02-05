@@ -38,4 +38,6 @@ public:
 	sf::Vector2f getEnd();
 	float getLineWidth();
 	bool getFilled();
+	void resize(sf::Vector2f offset);
+	void move(sf::Vector2f offset);
 };

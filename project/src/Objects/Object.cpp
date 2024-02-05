@@ -19,3 +19,12 @@ float Object::getLineWidth(){
 bool Object::getFilled(){
 	 return isFilled;
 }
+
+void Object::resize(sf::Vector2f offset){
+	end += offset;
+}
+
+void Object::move(sf::Vector2f offset){
+	end += offset;
+	start += offset;
+}

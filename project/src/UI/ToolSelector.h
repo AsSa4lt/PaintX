@@ -9,8 +9,11 @@ private:
 	tgui::Button::Ptr _eraserButton;
 	tgui::Texture _eraserTexture;
 
-	tgui::Button::Ptr _selectorButton;
-	tgui::Texture _selectorTexture;
+	tgui::Button::Ptr _resizeButton;
+	tgui::Texture _resizeTexture;
+
+	tgui::Button::Ptr _moveButton;
+	tgui::Texture _moveTexture;
 	int startPosition;
 	float height;
 	void SetButtonParameters(int index, tgui::Button::Ptr button, tgui::Texture& texture);

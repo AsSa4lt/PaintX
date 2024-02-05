@@ -16,10 +16,3 @@
 #define PATH_TO_IMAGES "../../../../src/images/"
 #define PATH_TO_SAVE "../../../../src/save.pnx"
 #define DEBUG
-
-#ifdef DEBUG
-#define FILLEd
-#endif // DEBUG
-#ifndef DEBUG 
-
-#endif // DEBUG

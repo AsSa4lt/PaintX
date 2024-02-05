@@ -21,18 +21,27 @@ ToolSelector::ToolSelector(tgui::Gui& gui, int height, int position){
 	});
 	gui.add(_eraserButton);
 
-	_selectorTexture = tgui::Texture((std::string)PATH_TO_IMAGES + "selectorColorButton.png");
-	_selectorButton = tgui::Button::create();
-	SetButtonParameters(1, _selectorButton, _selectorTexture);
+	_resizeTexture = tgui::Texture((std::string)PATH_TO_IMAGES + "selectorColorButton.png");
+	_resizeButton = tgui::Button::create();
+	SetButtonParameters(1, _resizeButton, _resizeTexture);
 
-	_selectorButton->onPress([] {
-		Controller::setTool(Tool::ERASER);
+	_resizeButton->onPress([] {
+		Controller::setTool(Tool::RESIZE);
 		});
-	gui.add(_selectorButton);
+	gui.add(_resizeButton);
+
+	_moveTexture = tgui::Texture((std::string)PATH_TO_IMAGES + "moveButton.png");
+	_moveButton = tgui::Button::create();
+	SetButtonParameters(2, _moveButton, _moveTexture);
+
+	_moveButton->onPress([] {
+		Controller::setTool(Tool::MOVE);
+		});
+	gui.add(_moveButton);
 }
 
 float ToolSelector::GetWidth(){
-	return height * (1 - TOOL_BUTTON_SIZE) / 2 + (TOOL_BUTTON_SIZE + TOOL_BUTTON_SPACING) * height * 2;
+	return height * (1 - TOOL_BUTTON_SIZE) / 2 + (TOOL_BUTTON_SIZE + TOOL_BUTTON_SPACING) * height * 3;
 }
 
 
@@ -42,8 +51,13 @@ void ToolSelector::draw(){
 	else
 		_eraserButton->getRenderer()->setBorderColor(sf::Color::Green);
 
-	if (Controller::getTool() == Tool::SELECTOR)
-		_selectorButton->getRenderer()->setBorderColor(sf::Color::Red);
+	if (Controller::getTool() == Tool::RESIZE)
+		_resizeButton->getRenderer()->setBorderColor(sf::Color::Red);
 	else
-		_selectorButton->getRenderer()->setBorderColor(sf::Color::Green);
+		_resizeButton->getRenderer()->setBorderColor(sf::Color::Green);
+
+	if (Controller::getTool() == Tool::MOVE)
+		_moveButton->getRenderer()->setBorderColor(sf::Color::Red);
+	else
+		_moveButton->getRenderer()->setBorderColor(sf::Color::Green);
 }

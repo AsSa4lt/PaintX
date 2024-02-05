@@ -36,6 +36,16 @@ void Canvas::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
 					}
 				}
 			}
+
+			if (Controller::getTool() == Tool::RESIZE || Controller::getTool() == Tool::MOVE) {
+				for(auto& object : Controller::getObjects()) {
+					if (object != nullptr && object->isInside(mouse, window)) {
+						Controller::setMovingObject(object);
+						break;
+					}
+				}
+				startPosition = start;
+			}
 		}
 	}
 	else if (event.type == sf::Event::MouseButtonReleased) {
@@ -43,7 +53,9 @@ void Canvas::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
 			// release the last object
 			isDrawing = false;
 			Controller::AddObject(Controller::getCurrentObject());
+			
 			Controller::setCurrentObject(nullptr);
+			Controller::setMovingObject(nullptr);
 		}
 	}
 	else if (event.type == sf::Event::MouseMoved) {
@@ -54,8 +66,21 @@ void Canvas::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
 			// convert to percentage
 			mouse.x /= window.getSize().x;
 			mouse.y /= window.getSize().y;
-			if(Controller::getCurrentObject() != nullptr)
+			if(Controller::getCurrentObject() != nullptr && Controller::getTool() != Tool::RESIZE && Controller::getTool() != Tool::MOVE)
 				Controller::getCurrentObject()->setEnd(mouse);
+
+			if (Controller::getMovingObject() != nullptr && (Controller::getTool() == Tool::RESIZE || Controller::getTool() == Tool::MOVE)) {
+				//move end and start position
+				sf::Vector2f mouse = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+				// convert to percentage
+				sf::Vector2f end = sf::Vector2f(mouse.x / window.getSize().x, mouse.y / window.getSize().y);
+				if(Controller::getTool() == Tool::RESIZE)
+					Controller::getMovingObject()->resize(end - startPosition);
+				else
+					Controller::getMovingObject()->move(end - startPosition);
+				startPosition = end;
+
+			}
 		}
 	}
 }
