@@ -36,7 +36,7 @@ void Window::run() {
     sf::Clock clock;
     while (_window.isOpen()) {
         sf::Event event;
-        while (_window.pollEvent(event)) {
+        if (_window.waitEvent(event)) {
             if (event.type == sf::Event::Closed)
                 _window.close();
 

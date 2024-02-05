@@ -110,5 +110,5 @@ bool Triangle::isInside(sf::Vector2f point, sf::RenderWindow& window) {
 
 std::string Triangle::getType()
 {
-    return std::string();
+    return "Triangle";
 }

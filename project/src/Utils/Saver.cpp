@@ -15,8 +15,12 @@ is filled(bool)
 */
 
 void Saver::Save(const std::string& filename){
+	std::ofstream file;
+	// delete file content
+	file.open(filename, std::ios::out | std::ios::trunc);
 	// get controller objects and save them to file
 	for (const auto& object : Controller::getObjects()) {
+		if(object == nullptr) continue;
 		// get object type
 		std::string type = object->getType();
 		// get start point
@@ -30,11 +34,11 @@ void Saver::Save(const std::string& filename){
 		// get is filled
 		bool isFilled = object->getFilled();
 		// save to file
-		std::ofstream file;
-		file.open(filename, std::ios::app);
-		file << type << " " << start.x << " " << start.y << " " << end.x << " " << end.y << " " << color.r << " " << color.g << " " << color.b << " " << lineWidth << " " << isFilled << std::endl;
-		file.close();
+
+		file << type << " " << start.x << " " << start.y << " " << end.x << " " << end.y << " " << (float)color.r << " " << (float)color.g << " " << (float)color.b << " " << lineWidth << " " << isFilled << std::endl;
 	}
+	file.close();
+
 }
 
 void Saver::Open(const std::string& filename){

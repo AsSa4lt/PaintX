@@ -19,7 +19,7 @@ FileTool::FileTool(tgui::Gui& gui, int height, int position) {
 	_openButton->onPress([] {
 		// open explorer to select file, create file with only ending .pnx
 		// Load to Saver::Save
-
+		Saver::Save(PATH_TO_SAVE);
 	});
 	gui.add(_openButton);
 
@@ -30,7 +30,8 @@ FileTool::FileTool(tgui::Gui& gui, int height, int position) {
 	_saveButton->onPress([] {
 		//open explorer to select file, select file with only ending .pnx
 		// Load to Saver::Load
-
+		Controller::ClearObjects();
+		Saver::Open(PATH_TO_SAVE);
 	});
 	gui.add(_saveButton);
 }
