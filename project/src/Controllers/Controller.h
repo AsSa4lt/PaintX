@@ -58,4 +58,5 @@ public:
 	static void ClearObjects();
 	static void setMovingObject(Object* object);
 	static Object* getMovingObject();
+	static void ClearController();
 };

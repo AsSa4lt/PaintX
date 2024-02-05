@@ -94,6 +94,12 @@ Object* Controller::getMovingObject(){
 	return currentObject;
 }
 
+void Controller::ClearController(){
+	ClearObjects();
+	if(currentObject != nullptr)
+		delete currentObject;
+}
+
 
 float Controller::getLineSize() {
 	switch (lineSize) {

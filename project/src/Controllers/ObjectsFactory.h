@@ -16,7 +16,6 @@ class ObjectsFactory{
 public:
 	static Object* createObject(const sf::Vector2f& start, const sf::Vector2f& end) {
 		if (Controller::getShape() == Shapes::LINE) {
-			// create a line
 			return new Line(start, end, Controller::getColor(), Controller::getLineSize(), Controller::getIsFilled());
 		}
 		else if (Controller::getShape() == Shapes::RECTANGLE) {

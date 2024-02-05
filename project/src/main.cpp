@@ -7,7 +7,6 @@
 int main() {
     Window window;
     window.run();
-    delete &window;
     return 0;
 }
 

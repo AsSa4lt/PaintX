@@ -37,8 +37,11 @@ void Window::run() {
     while (_window.isOpen()) {
         sf::Event event;
         if (_window.waitEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                _window.close();
+            if (event.type == sf::Event::Closed) {
+                    Controller::ClearController();
+                    delete _canvas;
+                    _window.close();
+            }
 
             if (event.type == sf::Event::Resized) {
                 // Enforce minimum size constraints

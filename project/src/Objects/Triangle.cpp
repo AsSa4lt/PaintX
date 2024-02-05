@@ -96,7 +96,7 @@ bool Triangle::isInside(sf::Vector2f point, sf::RenderWindow& window) {
     }
     else {
         // If the triangle is not filled, we need to check if the point is near any of the edges
-        float lineThickness = width; // Width is assumed to be the line thickness for the triangle's outline
+        float lineThickness = width; 
         auto checkLine = [lineThickness](sf::Vector2f p, sf::Vector2f a, sf::Vector2f b) {
             sf::Vector2f pa = p - a, ba = b - a;
             float h = std::clamp(dot(pa, ba) / dot(ba, ba), 0.0f, 1.0f);

@@ -17,7 +17,6 @@ FileTool::FileTool(tgui::Gui& gui, int height, int position) {
 	SetButtonParameters(0, _openButton, _openButtonTexture);
 
 	_openButton->onPress([] {
-		// open explorer to select file, create file with only ending .pnx
 		// Load to Saver::Save
 		Saver::Save(PATH_TO_SAVE);
 	});
@@ -28,7 +27,6 @@ FileTool::FileTool(tgui::Gui& gui, int height, int position) {
 	SetButtonParameters(1, _saveButton, _saveButtonTexture);
 
 	_saveButton->onPress([] {
-		//open explorer to select file, select file with only ending .pnx
 		// Load to Saver::Load
 		Controller::ClearObjects();
 		Saver::Open(PATH_TO_SAVE);
