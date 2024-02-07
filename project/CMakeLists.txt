@@ -24,3 +24,4 @@ find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
 find_package(TGUI 0.9 REQUIRED)
 
 add_subdirectory(src)
+

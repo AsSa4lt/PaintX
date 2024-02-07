@@ -72,7 +72,7 @@ void Controller::RemoveObject(Object* object){
 	// Use std::remove to shift the elements to be erased to the end, then erase them
 	auto newEnd = std::remove(objects.begin(), objects.end(), object);
 
-	// Actually erase the element(s) from the vector
+	// Actually erase the element from the vector
 	objects.erase(newEnd, objects.end());
 
 	delete object;

@@ -28,12 +28,15 @@ void Canvas::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
 
 			Object* object = ObjectsFactory::createObject(start, start);
 			Controller::setCurrentObject(object);
-
 			if (Controller::getTool() == Tool::ERASER) {
-				for(auto& object : Controller::getObjects()) {
+				std::vector<Object*> objectsToRemove;
+				for (auto& object : Controller::getObjects()) {
 					if (object != nullptr && object->isInside(mouse, window)) {
-						Controller::RemoveObject(object);
+						objectsToRemove.push_back(object);
 					}
+				}
+				for (auto& object : objectsToRemove) {
+					Controller::RemoveObject(object);
 				}
 			}
 

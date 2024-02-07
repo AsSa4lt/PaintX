@@ -4,3 +4,12 @@ target_include_directories(${APP_EXE} PRIVATE .)
 
 target_link_libraries(${APP_EXE} PRIVATE tgui)
 target_link_libraries(${APP_EXE} PRIVATE sfml-system sfml-window sfml-graphics)
+
+set(SOURCE_RESOURCES_DIR "${PROJECT_SOURCE_DIR}/src/images")
+set(DEST_RESOURCES_DIR "${CMAKE_BINARY_DIR}/src/images")
+# Copy the resources to the build directory
+add_custom_command(
+  TARGET ${APP_EXE} PRE_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${SOURCE_RESOURCES_DIR} ${DEST_RESOURCES_DIR}
+  COMMENT "Copying resources to build directory"
+) 
