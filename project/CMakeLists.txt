@@ -5,7 +5,7 @@ set(CMAKE_TOOLCHAIN_FILE "" CACHE STRING "Main application executable.")
 project(
     app
     VERSION 0.1
-    DESCRIPTION "An application to securely manage your passwords"
+    DESCRIPTION "An application to draw simple images"
     LANGUAGES CXX
     )
 

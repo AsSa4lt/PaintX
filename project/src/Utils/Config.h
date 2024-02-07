@@ -13,6 +13,6 @@
 #define TOOL_BUTTON_SIZE 0.6
 #define TOOL_BUTTON_SPACING 0.05
 
-#define PATH_TO_IMAGES "../../../../src/images/"
+#define PATH_TO_IMAGES "./images/"
 #define PATH_TO_SAVE "../../../../src/save.pnx"
 #define DEBUG
